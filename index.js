@@ -104,7 +104,7 @@ client.on('interactionCreate', async interaction => {
             break;
         case 'pizza':
             await interaction.reply(':pizza: :pizza: :pizza:')
-            await interaction.followUp('OM NOM NOM NOM NOM NOM NOM NOM\nYUMMY!!!')
+            await interaction.channel.send('OM NOM NOM NOM NOM NOM NOM NOM\nYUMMY!!!')
             break;
         case 'nuke':
             if (!checkIfUserIsAdmin(interaction.member)) {
