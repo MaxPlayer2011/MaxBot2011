@@ -133,6 +133,7 @@ client.on('interactionCreate', async interaction => {
                         case 'destroy':
                             try {
                                 await interaction.channel.bulkDelete(100)
+                                await interaction.channel.send(`Channel nuked by <@${interaction.member.id}>`)
                             } catch (error) {
                                 await interaction.deleteReply()
                                 await interaction.channel.send('**[ERROR]** Cannot delete messages that are over 14 days old.')
