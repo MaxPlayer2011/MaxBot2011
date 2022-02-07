@@ -168,7 +168,7 @@ client.on('interactionCreate', async interaction => {
             break;
         case 'kill':
             let murderer = `<@${interaction.member.id}>`;
-            let target = interaction.options.getUser('target');
+            let target = `<@${interaction.options.getUser('target').id}>`;
             let murdermessages = [
                 `${murderer} has murdered ${target}.`,
                 `${target} just got screwed by ${murderer}.`,
