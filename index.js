@@ -165,6 +165,17 @@ client.on('interactionCreate', async interaction => {
                 .setFooter({ text: 'Made by MaxPlayer2011' })
             await interaction.reply({ embeds: [eightballembed] })
             break;
+        case 'kill':
+            let murderer = interaction.member.id;
+            let target = interaction.options.getUser('target');
+            let murdermessages = [
+                `${murderer}} has murdered ${target}.`,
+                `${target} just got screwed by ${murderer}`,
+                `**R.I.P.**\n${target}\n\nWe will always remember him, except ${murderer}, ofc.`,
+                `${target} just got stabbed by ${murderer}`
+            ]
+            await interaction.reply(murdermessages[getRandomInt(murdermessages.length)])
+            break;
     }
 })
 
