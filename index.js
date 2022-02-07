@@ -62,7 +62,7 @@ client.on('interactionCreate', async interaction => {
 
     switch (interaction.commandName) {
         case 'help':
-            const help = new Discord.MessageEmbed()
+            let help = new Discord.MessageEmbed()
                 .setColor('#00ff00')
                 .setTitle('Commands list')
                 .setAuthor({ name: 'MaxBot2011', iconURL: client.user.avatarURL() })
@@ -94,7 +94,7 @@ client.on('interactionCreate', async interaction => {
             }
             break;
         case 'mrgoatcheese':
-            const mrgoatcheese = new Discord.MessageEmbed()
+            let mrgoatcheese = new Discord.MessageEmbed()
                 .setColor('5acff5')
                 .setDescription('hEy There! Sexy.! I am GoatCHeESe\n\nCHEESE CHEESE CHEESE')
             await interaction.reply({ embeds: [mrgoatcheese], files: ['https://www.dropbox.com/s/ib00ll2kbfvnvst/100047-white-goat-png-download-free.png?dl=1'] })
@@ -148,7 +148,7 @@ client.on('interactionCreate', async interaction => {
             }
             break;
         case '8ball':
-            const eightballreplies = [
+            let eightballreplies = [
                 'yes',
                 'no',
                 'bro stop just no',
@@ -157,7 +157,7 @@ client.on('interactionCreate', async interaction => {
                 'idk maybe yes',
                 'leave me alone\n\nfine fine, no'
             ]
-            const eightballembed = new Discord.MessageEmbed()
+            let eightballembed = new Discord.MessageEmbed()
                 .setColor('#00ff00')
                 .setTitle(interaction.options.getString('input'))
                 .setAuthor({ name: client.user.username, iconURL: client.user.avatarURL() })
