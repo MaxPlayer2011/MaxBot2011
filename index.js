@@ -175,7 +175,17 @@ client.on('interactionCreate', async interaction => {
                 `**R.I.P.**\n${target}\n\nWe will always remember him, except ${murderer}, ofc.`,
                 `${target} just got stabbed by ${murderer}.`
             ]
-            await interaction.reply(murdermessages[getRandomInt(murdermessages.length)])
+            switch (target) {
+                case `<@${clientId}>`:
+                    await interaction.reply(`hey! don\'t murder me, ${murderer}!!`)
+                    break;
+                case murderer:
+                    await interaction.reply(`${murderer} has killed himself. what an idiot.`)
+                    break;
+                default:
+                    await interaction.reply(murdermessages[getRandomInt(murdermessages.length)])
+                    break;
+            }
             break;
     }
 })
