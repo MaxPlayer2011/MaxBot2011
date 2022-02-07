@@ -66,7 +66,7 @@ client.on('interactionCreate', async interaction => {
                 .setColor('#00ff00')
                 .setTitle('Commands list')
                 .setAuthor({ name: 'MaxBot2011', iconURL: client.user.avatarURL() })
-                .setDescription('`help\nkoolkid\ngay\nmrgoatcheese\ncheese\npizza`')
+                .setDescription('`help\nkoolkid\ngay\nmrgoatcheese\ncheese\npizza\n8ball`')
                 .setFooter({ 'text': 'Made by MaxPlayer2011' })
             await interaction.reply({ embeds: [help] })
             break;
@@ -147,6 +147,24 @@ client.on('interactionCreate', async interaction => {
 
             }
             break;
+        case '8ball':
+            const eightballreplies = [
+                'yes',
+                'no',
+                'bro stop just no',
+                'maybe',
+                'isn\'t it obvious?',
+                'idk maybe yes',
+                'leave me alone\n\nfine fine, no'
+            ]
+            const eightballembed = new Discord.MessageEmbed()
+                .setColor('#00ff00')
+                .setTitle(interaction.options.getString('input'))
+                .setAuthor({ name: client.user.username, iconURL: client.user.avatarURL() })
+                .setDescription(eightballreplies[getRandomInt(eightballreplies.length)])
+                .setFooter({ text: 'Made by MaxPlayer2011' })
+            await interaction.reply({ embeds: [eightballembed] })
+            break;
     }
 })
 
@@ -155,6 +173,10 @@ function checkIfUserIsAdmin(member) {
         return true;
     else
         return false;
+}
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
 }
 
 client.login(process.env.BOT_TOKEN)
