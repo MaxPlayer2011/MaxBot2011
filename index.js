@@ -15,6 +15,7 @@ const resetCommands = false;
 const month = date.getMonth() + 1;
 const clientId = '934288841383231488'
 const guildId = '875382322168479784'
+var previousRandomNumber;
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`)
@@ -187,7 +188,12 @@ function checkIfUserIsAdmin(member) {
 }
 
 function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+    let random = Math.floor(Math.random() * max)
+    while (random == previousRandomNumber) {
+        random = Math.floor(Math.random() * max)
+    }
+    previousRandomNumber = random;
+    return random;
 }
 
 client.login(process.env.BOT_TOKEN)
