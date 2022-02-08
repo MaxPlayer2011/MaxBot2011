@@ -67,7 +67,7 @@ client.on('interactionCreate', async interaction => {
                 .setColor('#00ff00')
                 .setTitle('Commands list')
                 .setAuthor({ name: 'MaxBot2011', iconURL: client.user.avatarURL() })
-                .setDescription('`help\nkoolkid\ngay\nmrgoatcheese\ncheese\npizza\n8ball`')
+                .setDescription('`help\nkoolkid\ngay\nmrgoatcheese\ncheese\npizza\n8ball\nkill`')
                 .setFooter({ 'text': 'Made by MaxPlayer2011' })
             await interaction.reply({ embeds: [help] })
             break;
