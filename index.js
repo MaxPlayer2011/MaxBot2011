@@ -63,7 +63,7 @@ client.on('interactionCreate', async interaction => {
 
     switch (interaction.commandName) {
         case 'help':
-            let help = new Discord.MessageEmbed()
+            const help = new Discord.MessageEmbed()
                 .setColor('#00ff00')
                 .setTitle('Commands list')
                 .setAuthor({ name: 'MaxBot2011', iconURL: client.user.avatarURL() })
@@ -95,7 +95,7 @@ client.on('interactionCreate', async interaction => {
             }
             break;
         case 'mrgoatcheese':
-            let mrgoatcheese = new Discord.MessageEmbed()
+            const mrgoatcheese = new Discord.MessageEmbed()
                 .setColor('5acff5')
                 .setDescription('hEy There! Sexy.! I am GoatCHeESe\n\nCHEESE CHEESE CHEESE')
             await interaction.reply({ embeds: [mrgoatcheese], files: ['https://www.dropbox.com/s/ib00ll2kbfvnvst/100047-white-goat-png-download-free.png?dl=1'] })
@@ -148,7 +148,7 @@ client.on('interactionCreate', async interaction => {
             }
             break;
         case '8ball':
-            let eightballreplies = [
+            const eightballreplies = [
                 'yes',
                 'no',
                 'bro stop just no',
@@ -157,7 +157,7 @@ client.on('interactionCreate', async interaction => {
                 'idk maybe yes',
                 'leave me alone\n\nfine fine, no'
             ]
-            let eightballembed = new Discord.MessageEmbed()
+            const eightballembed = new Discord.MessageEmbed()
                 .setColor('#00ff00')
                 .setTitle(interaction.options.getString('input'))
                 .setAuthor({ name: client.user.username, iconURL: client.user.avatarURL() })
@@ -166,9 +166,9 @@ client.on('interactionCreate', async interaction => {
             await interaction.reply({ embeds: [eightballembed] })
             break;
         case 'kill':
-            let murderer = `<@${interaction.member.id}>`;
-            let target = `<@${interaction.options.getUser('target').id}>`;
-            let murdermessages = [
+            const murderer = `<@${interaction.member.id}>`;
+            const target = `<@${interaction.options.getUser('target').id}>`;
+            const murdermessages = [
                 `${murderer} has murdered ${target}.`,
                 `${target} just got screwed by ${murderer}.`,
                 `**R.I.P.**\n${target}\n\nWe will always remember him, except ${murderer}, ofc.`,
