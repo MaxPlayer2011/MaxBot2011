@@ -7,6 +7,6 @@ module.exports = {
         .addStringOption(option =>
             option
                 .setName('input')
-                .setDescription('enter ur question')
+                .setDescription('ur question')
                 .setRequired(true))
 }
