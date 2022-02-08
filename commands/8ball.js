@@ -6,6 +6,7 @@ module.exports = {
         .setDescription('use the magik 8 ball')
         .addStringOption(option =>
             option
-                .setName('input').setDescription('enter ur question')
+                .setName('input')
+                .setDescription('enter ur question')
                 .setRequired(true))
 }
