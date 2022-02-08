@@ -188,56 +188,66 @@ client.on('interactionCreate', async interaction => {
             }
             break;
         case 'heck':
-            const emails = [
-                'i.likecheese@yahoo.com',
-                'mrs.chisis@hotmail.com',
-                'mrasshole@gmail.com',
-                'vladimir.from.beluga@yandex.ru'
-            ]
-            const passwords = [
-                '123aBc!',
-                '(╯°□°）╯︵ ┻━┻',
-                '┬─┬ ノ( ゜-゜ノ)',
-                'morgzISdaBEST',
-                'totally_secure_password'
-            ]
-            const cringeMessages = [
-                'hEy GiRl! !',
-                'pickle',
-                'i eat eyeballz',
-                'i have diarrea every 5 mins help me :pray:'
-            ]
-            try {
-                await interaction.reply(`\`$ sudo heck ${interaction.options.getUser('target').tag}\``)
-                await wait(1000)
-                await interaction.editReply('Starting hecking...')
-                await wait(3000)
-                await interaction.editReply('**3%** Stealing Discord credentials...')
-                await wait(3000)
-                await interaction.editReply(
-                    `**9%** Found credentials:\n\`Email: ${emails[getRandomInt(emails.length)]}\nPassword: ${passwords[getRandomInt(passwords.length)]}\``
-                )
-                await wait(3000)
-                await interaction.editReply('**16%** Hacking bank account...')
-                await wait(3000)
-                await interaction.editReply('**22%** Finding most common string...')
-                await wait(3000)
-                await interaction.editReply(`**32%** Found most common string:\n"${cringeMessages[getRandomInt(cringeMessages.length)]}"`)
-                await wait(3000)
-                await interaction.editReply('**48%** Sending mean messages to all of his DMs...')
-                await wait(3000)
-                await interaction.editReply('**64%** Obtaining birthdate...')
-                await wait(3000)
-                await interaction.editReply(`**72%** Found birthdate:\n${month}/${date.getDate() - 1}/${date.getFullYear()}`)
-                await wait(3000)
-                await interaction.editReply('**87%** Deleting Roblox account with 64.66B+ Robux...')
-                await wait(3000)
-                await interaction.editReply('**99%** Finishing up...')
-                await wait(3000)
-                await interaction.editReply('**100%** The *totally* real heck is complete')
-                break;
-            } catch (error) {
-                await interaction.channel.send('An error has occured.')
+            switch (interaction.options.getUser('target').id) {
+                case `${clientId}`:
+                    await interaction.reply('**YOU CAN\'T HECK ME BUHAHAHAHA!!!**')
+                    break;
+                case `${interaction.member.id}`:
+                    await interaction.reply('LMAO u can\'t heck urself :joy:')
+                    break;
+                default:
+                    const emails = [
+                        'i.likecheese@yahoo.com',
+                        'mrs.chisis@hotmail.com',
+                        'mrasshole@gmail.com',
+                        'vladimir.from.beluga@yandex.ru'
+                    ]
+                    const passwords = [
+                        '123aBc!',
+                        '(╯°□°）╯︵ ┻━┻',
+                        '┬─┬ ノ( ゜-゜ノ)',
+                        'morgzISdaBEST',
+                        'totally_secure_password'
+                    ]
+                    const cringeMessages = [
+                        'hEy GiRl! !',
+                        'pickle',
+                        'i eat eyeballz',
+                        'i have diarrea every 5 mins help me :pray:'
+                    ]
+                    try {
+                        await interaction.reply(`\`$ sudo heck ${interaction.options.getUser('target').tag}\``)
+                        await wait(1000)
+                        await interaction.editReply('Starting hecking...')
+                        await wait(3000)
+                        await interaction.editReply('**3%** Stealing Discord credentials...')
+                        await wait(3000)
+                        await interaction.editReply(
+                            `**9%** Found credentials:\n\`Email: ${emails[getRandomInt(emails.length)]}\nPassword: ${passwords[getRandomInt(passwords.length)]}\``
+                        )
+                        await wait(3000)
+                        await interaction.editReply('**16%** Hacking bank account...')
+                        await wait(3000)
+                        await interaction.editReply('**22%** Finding most common string...')
+                        await wait(3000)
+                        await interaction.editReply(`**32%** Found most common string:\n"${cringeMessages[getRandomInt(cringeMessages.length)]}"`)
+                        await wait(3000)
+                        await interaction.editReply('**48%** Sending mean messages to all of his DMs...')
+                        await wait(3000)
+                        await interaction.editReply('**64%** Obtaining birthdate...')
+                        await wait(3000)
+                        await interaction.editReply(`**72%** Found birthdate:\n${month}/${date.getDate() - 1}/${date.getFullYear()}`)
+                        await wait(3000)
+                        await interaction.editReply('**87%** Deleting Roblox account with 64.66B+ Robux...')
+                        await wait(3000)
+                        await interaction.editReply('**99%** Finishing up...')
+                        await wait(3000)
+                        await interaction.editReply('**100%** The *totally* real heck is complete')
+                        break;
+                    } catch (error) {
+                        await interaction.followUp({ content: ':x: An error has occured.', ephemeral: true })
+                    }
+                    break;
             }
     }
 })
