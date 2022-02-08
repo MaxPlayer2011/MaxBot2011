@@ -145,7 +145,6 @@ client.on('interactionCreate', async interaction => {
                             break;
                     }
                 });
-
             }
             break;
         case '8ball':
