@@ -168,7 +168,7 @@ client.on('interactionCreate', async interaction => {
         case 'kill':
             const murderer = `<@${interaction.member.id}>`;
             const target = `<@${interaction.options.getUser('target').id}>`;
-            const murdermessages = [
+            const murderMessages = [
                 `${murderer} has murdered ${target}.`,
                 `${target} just got screwed by ${murderer}.`,
                 `**R.I.P.**\n${target}\n\nWe will always remember him, except ${murderer}, ofc.`,
@@ -182,7 +182,7 @@ client.on('interactionCreate', async interaction => {
                     await interaction.reply(`${murderer} has killed himself. what an idiot.`)
                     break;
                 default:
-                    await interaction.reply(murdermessages[getRandomInt(murdermessages.length)])
+                    await interaction.reply(murderMessages[getRandomInt(murderMessages.length)])
                     break;
             }
             break;
