@@ -13,7 +13,6 @@ const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const debugMode = false;
 const resetCommands = false;
-const month = date.getMonth() + 1;
 const clientId = '934288841383231488'
 const guildId = '875382322168479784'
 var previousRandomNumber;
@@ -47,7 +46,7 @@ client.on('ready', () => {
         client.guilds.cache.get(guildId).commands.set([]);
     }
     client.user.setActivity('/help')
-    console.log('Bot ready\nCurrent Month: ' + month)
+    console.log('Bot ready')
 })
 
 client.on('messageCreate', msg => {
@@ -236,7 +235,7 @@ client.on('interactionCreate', async interaction => {
                         await wait(3000)
                         await interaction.editReply('**64%** Obtaining birthdate...')
                         await wait(3000)
-                        await interaction.editReply(`**72%** Found birthdate:\n${month}/${date.getDate() - 1}/${date.getFullYear()}`)
+                        await interaction.editReply(`**72%** Found birthdate:\n${date.getMonth() + 1}/${date.getDate() - 1}/${date.getFullYear()}`)
                         await wait(3000)
                         await interaction.editReply('**87%** Deleting Roblox account with 64.66B+ Robux...')
                         await wait(3000)
