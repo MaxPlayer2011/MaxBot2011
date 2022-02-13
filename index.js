@@ -248,6 +248,14 @@ client.on('interactionCreate', async interaction => {
                     }
                     break;
             }
+        case 'uploademoji':
+            await interaction.guild.emojis.create(interaction.options.getString('input01'), interaction.options.getString('input02'))
+                .then(emoji => interaction.reply({
+                    content: `Successfully created the emoji! :${emoji.name}:`,
+                    ephemeral: true
+                }))
+                .catch(interaction.followUp({ content: ':x: An error has occured.', ephemeral: true }));
+            break;
     }
 })
 
