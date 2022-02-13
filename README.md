@@ -3,13 +3,13 @@ This is a cool bot with a lot of commands! Feel free to fork it or use the code 
 
 If you want to use it in your server, then [add it](https://discord.com/api/oauth2/authorize?client_id=934288841383231488&permissions=8&scope=bot%20applications.commands).
 
-# Requirements
+## Requirements
 
 node.js
 
 npm (comes with node.js)
 
-# Running
+## Running
 Once you got node.js and npm installed, follow these steps:
 
 1. Open up the command prompt (terminal in Linux and macOS)
