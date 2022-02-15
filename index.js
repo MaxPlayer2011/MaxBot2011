@@ -31,7 +31,7 @@ const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN);
         await rest.put(
             // MUST READ
             // https://discordjs.guide/interactions/registering-slash-commands.html#global-commands
-            
+
             Routes.applicationGuildCommands(clientId, guildId),
             //Routes.applicationCommands(clientId),
             { body: commands },
