@@ -13,8 +13,8 @@ const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const debugMode = false;
 const resetCommands = false;
-const clientId = '934288841383231488'
-const guildId = '875382322168479784'
+const clientId = '934288841383231488' //Change this to your own bot ID
+const guildId = '875382322168479784' //Change this to the guild ID where you want the bot to be tested in
 var previousRandomNumber;
 
 for (const file of commandFiles) {
@@ -29,6 +29,9 @@ const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN);
         console.log('Started refreshing application (/) commands.');
 
         await rest.put(
+            // MUST READ
+            // https://discordjs.guide/interactions/registering-slash-commands.html#global-commands
+            
             Routes.applicationGuildCommands(clientId, guildId),
             //Routes.applicationCommands(clientId),
             { body: commands },
