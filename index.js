@@ -15,7 +15,6 @@ const debugMode = false;
 const resetCommands = false;
 const clientId = '934288841383231488' //Change this to your own bot ID
 const guildId = '875382322168479784' //Change this to the guild ID where you want the bot to be tested in
-var previousRandomNumber;
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`)
@@ -269,6 +268,8 @@ function checkIfUserIsAdmin(member) {
     else
         return false;
 }
+
+let previousRandomNumber;
 
 function getRandomInt(max) {
     let random = Math.floor(Math.random() * max)
