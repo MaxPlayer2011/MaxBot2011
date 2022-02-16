@@ -15,6 +15,15 @@ const debugMode = false;
 const resetCommands = false; //Set this to true if you want to unregister the global and guild commands
 const clientId = '934288841383231488' //Change this to your own bot ID
 const guildId = '875382322168479784' //Change this to the guild ID where you want the bot to be tested in
+const helpEmbed = new Discord.MessageEmbed()
+    .setColor('#00ff00')
+    .setTitle('Commands list')
+    .setDescription(
+        '**Commands**\n`help\nuploademoji`\n\n' +
+        '**Slash Commands**\n`nuke\nheck`\n\n' +
+        '**Prefix Commands**\n`koolkid\ngay\nmrgoatcheese\ncheese\npizza\n8ball\nkill\necho`'
+    )
+    .setFooter({ 'text': 'Made by MaxPlayer2011' })
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`)
@@ -47,16 +56,112 @@ client.on('ready', () => {
         client.application.commands.set([]);
         client.guilds.cache.get(guildId).commands.set([]);
     }
-    client.user.setActivity('/help')
+    helpEmbed.setAuthor({ name: 'MaxBot2011', iconURL: client.user.avatarURL() })
+    client.user.setActivity('$help')
     console.log('Bot ready')
 })
 
 client.on('messageCreate', msg => {
-    if (msg.content == 'hello world' && debugMode) {
-        msg.channel.send(`<@${msg.author.id}> hello, idiot`)
-    }
-    else if (msg.content.includes(`<@!${clientId}>`)) {
-        msg.channel.send('hey!! who pinged me?!')
+    if (!msg.content.startsWith('$') || msg.author.bot) return;
+
+    const args = msg.content.toLowerCase().substring(1).trim().split(/ +/g)
+    const command = args.shift()
+    switch (command) {
+        case 'help':
+            msg.channel.send({ embeds: [helpEmbed] })
+            break;
+        case 'koolkid':
+            if (args[0] == null)
+                msg.channel.send(`yea thats right! whos the kool kid? <@${msg.author.id}>!`)
+            else
+                msg.channel.send(`yea thats right! whos the kool kid? ${args[0]}!`)
+            break;
+        case 'gay':
+            if (date.getMonth() != 5) {
+                if (args[0] == null)
+                    msg.channel.send(`<@${msg.author.id}> is gay!`)
+                else if (args[1] == `<@${clientId}>`)
+                    msg.channel.send(`hey! dont call me gay, <@${msg.author.id}>!`)
+                else
+                    msg.channel.send(args[0] + ' is gay!')
+            }
+
+            else {
+                if (args[0] == null)
+                    msg.channel.send(`happy pride month, <@${msg.author.id}>!`)
+                else
+                    msg.channel.send(`happy pride month, ${args[0]}!`)
+            }
+            break;
+        case 'mrgoatcheese':
+            const mrgoatcheese = new Discord.MessageEmbed()
+                .setColor('5acff5')
+                .setDescription('hEy There! Sexy.! I am GoatCHeESe\n\nCHEESE CHEESE CHEESE')
+            msg.channel.send({ embeds: [mrgoatcheese], files: ['http://dev.gamez-productions.com/discord/maxbot2011/mrgoatcheese.png'] })
+            break;
+        case 'cheese':
+            msg.channel.send(':cheese: :cheese: :cheese:\n\nmmm, cheese.')
+            break;
+        case 'pizza':
+            msg.channel.send(':pizza: :pizza: :pizza:')
+            msg.channel.send('OM NOM NOM NOM NOM NOM NOM NOM\nYUMMY!!!')
+            break;
+        case '8ball':
+            const eightballreplies = [
+                'yes',
+                'no',
+                'bro stop just no',
+                'maybe',
+                'isn\'t it obvious?',
+                'idk maybe yes',
+                'leave me alone\n\nfine fine, no'
+            ]
+            const eightballembed = new Discord.MessageEmbed()
+                .setColor('#00ff00')
+                .setTitle(args[0])
+                .setAuthor({ name: client.user.username, iconURL: client.user.avatarURL() })
+                .setDescription(eightballreplies[getRandomInt(eightballreplies.length)])
+                .setFooter({ text: 'Made by MaxPlayer2011' })
+            msg.channel.send({ embeds: [eightballembed] })
+            break;
+        case 'kill':
+            if (args[0] == null) return;
+
+            const murderer = `<@!${msg.author.id}>`;
+            const target = args[0];
+            const murderMessages = [
+                `${murderer} has murdered ${target}.`,
+                `${target} just got screwed by ${murderer}.`,
+                `**R.I.P.**\n${target}\n\nWe will always remember him, except ${murderer}, ofc.`,
+                `${target} just got stabbed by ${murderer}.`
+            ]
+            switch (target) {
+                case `<@!${clientId}>`:
+                    msg.channel.send(`hey! don\'t murder me, ${murderer}!!`)
+                    break;
+                case murderer:
+                    msg.channel.send(`${murderer} has killed himself. what an idiot.`)
+                    break;
+                default:
+                    msg.channel.send(murderMessages[getRandomInt(murderMessages.length)])
+                    break;
+            }
+            break;
+        case 'uploademoji':
+            if (args[0] != null && args[1] != null) {
+                msg.guild.emojis.create(args[0], args[1])
+                    .then(msg.channel.send('Successfully created the emoji!'))
+                    .catch(console.error);
+            }
+            break;
+        case 'echo':
+            if (args[0] != null) {
+                msg.channel.send(args[0])
+            }
+            break;
+        default:
+            msg.channel.send(':x: Unknown command.')
+            break;
     }
 })
 
@@ -65,49 +170,7 @@ client.on('interactionCreate', async interaction => {
 
     switch (interaction.commandName) {
         case 'help':
-            const help = new Discord.MessageEmbed()
-                .setColor('#00ff00')
-                .setTitle('Commands list')
-                .setAuthor({ name: 'MaxBot2011', iconURL: client.user.avatarURL() })
-                .setDescription('`help\nkoolkid\ngay\nmrgoatcheese\ncheese\npizza\nnuke\n8ball\nkill\nheck`')
-                .setFooter({ 'text': 'Made by MaxPlayer2011' })
-            await interaction.reply({ embeds: [help] })
-            break;
-        case 'koolkid':
-            if (interaction.options.getUser('target') == null)
-                await interaction.reply(`yea thats right! whos the kool kid? <@${interaction.member.id}>!`)
-            else
-                await interaction.reply(`yea thats right! whos the kool kid? <@${interaction.options.getUser('target').id}>!`)
-            break;
-        case 'gay':
-            if (date.getMonth() != 5) {
-                if (interaction.options.getUser('target') == null)
-                    await interaction.reply(`<@${interaction.member.id}> is gay!`)
-                else if (interaction.options.getUser('target').toString() == `<@${clientId}>`)
-                    await interaction.reply(`hey! dont call me gay, <@${interaction.member.id}>!`)
-                else
-                    await interaction.reply(`<@${interaction.options.getUser('target').id}> is gay!`)
-            }
-
-            else {
-                if (interaction.options.getUser('target') == null)
-                    await interaction.reply(`happy pride month, <@${interaction.member.id}>!`)
-                else
-                    await interaction.reply(`happy pride month, <@${interaction.options.getUser('target').id}>!`)
-            }
-            break;
-        case 'mrgoatcheese':
-            const mrgoatcheese = new Discord.MessageEmbed()
-                .setColor('5acff5')
-                .setDescription('hEy There! Sexy.! I am GoatCHeESe\n\nCHEESE CHEESE CHEESE')
-            await interaction.reply({ embeds: [mrgoatcheese], files: ['https://www.dropbox.com/s/ib00ll2kbfvnvst/100047-white-goat-png-download-free.png?dl=1'] })
-            break;
-        case 'cheese':
-            await interaction.reply(':cheese: :cheese: :cheese:\n\nmmm, cheese.')
-            break;
-        case 'pizza':
-            await interaction.reply(':pizza: :pizza: :pizza:')
-            await interaction.channel.send('OM NOM NOM NOM NOM NOM NOM NOM\nYUMMY!!!')
+            await interaction.reply({ embeds: [helpEmbed] })
             break;
         case 'nuke':
             if (!checkIfUserIsAdmin(interaction.member)) {
@@ -147,45 +210,6 @@ client.on('interactionCreate', async interaction => {
                             break;
                     }
                 });
-            }
-            break;
-        case '8ball':
-            const eightballreplies = [
-                'yes',
-                'no',
-                'bro stop just no',
-                'maybe',
-                'isn\'t it obvious?',
-                'idk maybe yes',
-                'leave me alone\n\nfine fine, no'
-            ]
-            const eightballembed = new Discord.MessageEmbed()
-                .setColor('#00ff00')
-                .setTitle(interaction.options.getString('input'))
-                .setAuthor({ name: client.user.username, iconURL: client.user.avatarURL() })
-                .setDescription(eightballreplies[getRandomInt(eightballreplies.length)])
-                .setFooter({ text: 'Made by MaxPlayer2011' })
-            await interaction.reply({ embeds: [eightballembed] })
-            break;
-        case 'kill':
-            const murderer = `<@${interaction.member.id}>`;
-            const target = `<@${interaction.options.getUser('target').id}>`;
-            const murderMessages = [
-                `${murderer} has murdered ${target}.`,
-                `${target} just got screwed by ${murderer}.`,
-                `**R.I.P.**\n${target}\n\nWe will always remember him, except ${murderer}, ofc.`,
-                `${target} just got stabbed by ${murderer}.`
-            ]
-            switch (target) {
-                case `<@${clientId}>`:
-                    await interaction.reply(`hey! don\'t murder me, ${murderer}!!`)
-                    break;
-                case murderer:
-                    await interaction.reply(`${murderer} has killed himself. what an idiot.`)
-                    break;
-                default:
-                    await interaction.reply(murderMessages[getRandomInt(murderMessages.length)])
-                    break;
             }
             break;
         case 'heck':
