@@ -20,8 +20,8 @@ const helpEmbed = new Discord.MessageEmbed()
     .setTitle('Commands list')
     .setDescription(
         '**Commands**\n`help\nuploademoji`\n\n' +
-        '**Slash Commands**\n`nuke\nheck`\n\n' +
-        '**Prefix Commands**\n`koolkid\ngay\nmrgoatcheese\ncheese\npizza\n8ball\nkill\necho`'
+        '**Slash Commands**\n`nuke`\n\n' +
+        '**Prefix Commands**\n`koolkid\ngay\nmrgoatcheese\ncheese\npizza\n8ball\nkill\nheck\necho`'
     )
     .setFooter({ 'text': 'Made by MaxPlayer2011' })
 
@@ -61,7 +61,7 @@ client.on('ready', () => {
     console.log('Bot ready')
 })
 
-client.on('messageCreate', msg => {
+client.on('messageCreate', async msg => {
     if (!msg.content.startsWith('$') || msg.author.bot) return;
 
     const args = msg.content.substring(1).trim().split(/ +/g)
@@ -148,6 +148,69 @@ client.on('messageCreate', msg => {
                     break;
             }
             break;
+        case 'heck':
+            switch (args[0]) {
+                case `<@!${clientId}>`:
+                    msg.channel.send('**YOU CAN\'T HECK ME BUHAHAHAHA!!!**')
+                    break;
+                case `<@!${msg.author.id}>`:
+                    msg.channel.send('LMAO u can\'t heck urself :joy:')
+                    break;
+                default:
+                    const emails = [
+                        'i.likecheese@yahoo.com',
+                        'mrs.chisis@hotmail.com',
+                        'mrasshole@gmail.com',
+                        'vladimir.from.beluga@yandex.ru'
+                    ]
+                    const passwords = [
+                        '123aBc!',
+                        '(╯°□°）╯︵ ┻━┻',
+                        '┬─┬ ノ( ゜-゜ノ)',
+                        'morgzISdaBEST',
+                        'totally_secure_password'
+                    ]
+                    const cringeMessages = [
+                        'hEy GiRl! !',
+                        'pickle',
+                        'i eat eyeballz',
+                        'i have diarrea every 5 mins help me :pray:'
+                    ]
+                    try {
+                        const message = await msg.channel.send(`\`$ sudo heck ${client.users.cache.get(args[0].slice(3, -1)).tag}\``)
+                        await wait(1000)
+                        await message.edit('Starting hecking...')
+                        await wait(3000)
+                        await message.edit('**3%** Stealing Discord credentials...')
+                        await wait(3000)
+                        await message.edit(
+                            `**9%** Found credentials:\n\`Email: ${emails[getRandomInt(emails.length)]}\nPassword: ${passwords[getRandomInt(passwords.length)]}\``
+                        )
+                        await wait(3000)
+                        await message.edit('**16%** Hacking bank account...')
+                        await wait(3000)
+                        await message.edit('**22%** Finding most common string...')
+                        await wait(3000)
+                        await message.edit(`**32%** Found most common string:\n"${cringeMessages[getRandomInt(cringeMessages.length)]}"`)
+                        await wait(3000)
+                        await message.edit('**48%** Sending mean messages to all of his DMs...')
+                        await wait(3000)
+                        await message.edit('**64%** Obtaining birthdate...')
+                        await wait(3000)
+                        await message.edit(`**72%** Found birthdate:\n${date.getMonth() + 1}/${date.getDate() - 1}/${date.getFullYear()}`)
+                        await wait(3000)
+                        await message.edit('**87%** Deleting Roblox account with 64.66B+ Robux...')
+                        await wait(3000)
+                        await message.edit('**99%** Finishing up...')
+                        await wait(3000)
+                        await message.edit('**100%** The *totally* real heck is complete')
+                        break;
+                    } catch (error) {
+                        msg.channel.send(':x: An error has occured.')
+                    }
+                    break;
+            }
+            break;
         case 'uploademoji':
             if (args[0] != null && args[1] != null) {
                 msg.guild.emojis.create(args[0], args[1])
@@ -211,69 +274,6 @@ client.on('interactionCreate', async interaction => {
                             break;
                     }
                 });
-            }
-            break;
-        case 'heck':
-            switch (interaction.options.getUser('target').id) {
-                case `${clientId}`:
-                    await interaction.reply('**YOU CAN\'T HECK ME BUHAHAHAHA!!!**')
-                    break;
-                case `${interaction.member.id}`:
-                    await interaction.reply('LMAO u can\'t heck urself :joy:')
-                    break;
-                default:
-                    const emails = [
-                        'i.likecheese@yahoo.com',
-                        'mrs.chisis@hotmail.com',
-                        'mrasshole@gmail.com',
-                        'vladimir.from.beluga@yandex.ru'
-                    ]
-                    const passwords = [
-                        '123aBc!',
-                        '(╯°□°）╯︵ ┻━┻',
-                        '┬─┬ ノ( ゜-゜ノ)',
-                        'morgzISdaBEST',
-                        'totally_secure_password'
-                    ]
-                    const cringeMessages = [
-                        'hEy GiRl! !',
-                        'pickle',
-                        'i eat eyeballz',
-                        'i have diarrea every 5 mins help me :pray:'
-                    ]
-                    try {
-                        await interaction.reply(`\`$ sudo heck ${interaction.options.getUser('target').tag}\``)
-                        await wait(1000)
-                        await interaction.editReply('Starting hecking...')
-                        await wait(3000)
-                        await interaction.editReply('**3%** Stealing Discord credentials...')
-                        await wait(3000)
-                        await interaction.editReply(
-                            `**9%** Found credentials:\n\`Email: ${emails[getRandomInt(emails.length)]}\nPassword: ${passwords[getRandomInt(passwords.length)]}\``
-                        )
-                        await wait(3000)
-                        await interaction.editReply('**16%** Hacking bank account...')
-                        await wait(3000)
-                        await interaction.editReply('**22%** Finding most common string...')
-                        await wait(3000)
-                        await interaction.editReply(`**32%** Found most common string:\n"${cringeMessages[getRandomInt(cringeMessages.length)]}"`)
-                        await wait(3000)
-                        await interaction.editReply('**48%** Sending mean messages to all of his DMs...')
-                        await wait(3000)
-                        await interaction.editReply('**64%** Obtaining birthdate...')
-                        await wait(3000)
-                        await interaction.editReply(`**72%** Found birthdate:\n${date.getMonth() + 1}/${date.getDate() - 1}/${date.getFullYear()}`)
-                        await wait(3000)
-                        await interaction.editReply('**87%** Deleting Roblox account with 64.66B+ Robux...')
-                        await wait(3000)
-                        await interaction.editReply('**99%** Finishing up...')
-                        await wait(3000)
-                        await interaction.editReply('**100%** The *totally* real heck is complete')
-                        break;
-                    } catch (error) {
-                        await interaction.followUp({ content: ':x: An error has occured.', ephemeral: true })
-                    }
-                    break;
             }
             break;
         case 'uploademoji':
