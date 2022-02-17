@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "MaxPlayer2011",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "discord.js": "^13.6.0",
     "dotenv": "^14.3.2",
