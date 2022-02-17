@@ -64,8 +64,9 @@ client.on('ready', () => {
 client.on('messageCreate', msg => {
     if (!msg.content.startsWith('$') || msg.author.bot) return;
 
-    const args = msg.content.toLowerCase().substring(1).trim().split(/ +/g)
-    const command = args.shift()
+    const args = msg.content.substring(1).trim().split(/ +/g)
+    const command = args.shift().toLowerCase()
+    const fullArgs = msg.content.substring(command.length + 2)
     switch (command) {
         case 'help':
             msg.channel.send({ embeds: [helpEmbed] })
@@ -118,7 +119,7 @@ client.on('messageCreate', msg => {
             ]
             const eightballembed = new Discord.MessageEmbed()
                 .setColor('#00ff00')
-                .setTitle(args[0])
+                .setTitle(fullArgs)
                 .setAuthor({ name: client.user.username, iconURL: client.user.avatarURL() })
                 .setDescription(eightballreplies[getRandomInt(eightballreplies.length)])
                 .setFooter({ text: 'Made by MaxPlayer2011' })
@@ -156,7 +157,7 @@ client.on('messageCreate', msg => {
             break;
         case 'echo':
             if (args[0] != null) {
-                msg.channel.send(args[0])
+                msg.channel.send(fullArgs)
             }
             break;
         default:
