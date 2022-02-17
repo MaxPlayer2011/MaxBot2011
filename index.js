@@ -1,6 +1,3 @@
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const fs = require('fs');
 const { Permissions } = require('discord.js');
 const wait = require('util').promisify(setTimeout);
 
@@ -9,54 +6,10 @@ require('dotenv').config()
 const Discord = require('discord.js')
 const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] });
 const date = new Date()
-const commands = [];
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const debugMode = false;
-const resetCommands = false; //Set this to true if you want to unregister the global and guild commands
 const clientId = '934288841383231488' //Change this to your own bot ID
-const guildId = '875382322168479784' //Change this to the guild ID where you want the bot to be tested in
-const helpEmbed = new Discord.MessageEmbed()
-    .setColor('#00ff00')
-    .setTitle('Commands list')
-    .setDescription(
-        '**Commands**\n`help\nuploademoji`\n\n' +
-        '**Slash Commands**\n`nuke`\n\n' +
-        '**Prefix Commands**\n`koolkid\ngay\nmrgoatcheese\ncheese\npizza\n8ball\nkill\nheck\necho`'
-    )
-    .setFooter({ 'text': 'Made by MaxPlayer2011' })
-
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`)
-    commands.push(command.data.toJSON())
-}
-
-const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN);
-
-(async () => {
-    try {
-        console.log('Started refreshing application (/) commands.');
-
-        await rest.put(
-            // MUST READ
-            // https://discordjs.guide/interactions/registering-slash-commands.html#global-commands
-
-            Routes.applicationGuildCommands(clientId, guildId),
-            //Routes.applicationCommands(clientId),
-            { body: commands },
-        );
-
-        console.log('Successfully reloaded application (/) commands.');
-    } catch (error) {
-        console.error(error);
-    }
-})();
 
 client.on('ready', () => {
-    if (resetCommands) {
-        client.application.commands.set([]);
-        client.guilds.cache.get(guildId).commands.set([]);
-    }
-    helpEmbed.setAuthor({ name: 'MaxBot2011', iconURL: client.user.avatarURL() })
     client.user.setActivity('$help')
     console.log('Bot ready')
 })
@@ -69,6 +22,12 @@ client.on('messageCreate', async msg => {
     const fullArgs = msg.content.substring(command.length + 2)
     switch (command) {
         case 'help':
+            const helpEmbed = new Discord.MessageEmbed()
+                .setColor('#00ff00')
+                .setTitle('Commands list')
+                .setAuthor({ name: 'MaxBot2011', iconURL: client.user.avatarURL() })
+                .setDescription('`koolkid\ngay\nmrgoatcheese\ncheese\npizza\nnuke\n8ball\nkill\nheck\necho`')
+                .setFooter({ 'text': 'Make sure to put a $ before the command!\n\nMade by MaxPlayer2011' })
             msg.channel.send({ embeds: [helpEmbed] })
             break;
         case 'koolkid':
@@ -86,7 +45,6 @@ client.on('messageCreate', async msg => {
                 else
                     msg.channel.send(args[0] + ' is gay!')
             }
-
             else {
                 if (args[0] == null)
                     msg.channel.send(`happy pride month, <@${msg.author.id}>!`)
@@ -106,6 +64,46 @@ client.on('messageCreate', async msg => {
         case 'pizza':
             msg.channel.send(':pizza: :pizza: :pizza:')
             msg.channel.send('OM NOM NOM NOM NOM NOM NOM NOM\nYUMMY!!!')
+            break;
+        case 'nuke':
+            if (!checkIfUserIsAdmin(msg.member)) {
+                msg.channel.send('Sorry, but you do not have permission to do that.')
+            }
+            else {
+                const nukeButtons = new Discord.MessageActionRow().addComponents(
+                    new Discord.MessageButton()
+                        .setCustomId('destroy')
+                        .setLabel('Yes')
+                        .setStyle('DANGER'),
+                    new Discord.MessageButton()
+                        .setCustomId('staysafe')
+                        .setLabel('No')
+                        .setStyle('SUCCESS')
+                )
+                const message = await msg.channel.send({
+                    content: 'Are you sure you want to nuke this channel?\n**YOU WON\'T BE ABLE TO UNDO THIS!!**\n*Note: Only the last 100 messages that are under 14 days old will be deleted.*',
+                    components: [nukeButtons]
+                })
+
+                const collector = msg.channel.createMessageComponentCollector({ time: 15000 });
+
+                collector.on('collect', async i => {
+                    switch (i.customId) {
+                        case 'destroy':
+                            try {
+                                await msg.channel.bulkDelete(100)
+                                msg.channel.send(`Channel nuked by <@${msg.author.id}>`)
+                            } catch (error) {
+                                message.delete()
+                                msg.channel.send(':x: Cannot delete messages that are over 14 days old.')
+                            }
+                            break;
+                        case 'staysafe':
+                            message.delete()
+                            break;
+                    }
+                });
+            }
             break;
         case '8ball':
             const eightballreplies = [
@@ -225,64 +223,6 @@ client.on('messageCreate', async msg => {
             break;
         default:
             msg.channel.send(':x: Unknown command.')
-            break;
-    }
-})
-
-client.on('interactionCreate', async interaction => {
-    if (!interaction.isCommand()) return;
-
-    switch (interaction.commandName) {
-        case 'help':
-            await interaction.reply({ embeds: [helpEmbed] })
-            break;
-        case 'nuke':
-            if (!checkIfUserIsAdmin(interaction.member)) {
-                await interaction.reply('Sorry, but you do not have permission to do that.')
-            }
-            else {
-                const nukeButtons = new Discord.MessageActionRow().addComponents(
-                    new Discord.MessageButton()
-                        .setCustomId('destroy')
-                        .setLabel('Yes')
-                        .setStyle('DANGER'),
-                    new Discord.MessageButton()
-                        .setCustomId('staysafe')
-                        .setLabel('No')
-                        .setStyle('SUCCESS')
-                )
-                await interaction.reply({
-                    content: 'Are you sure you want to nuke this channel?\n**YOU WON\'T BE ABLE TO UNDO THIS!!**\n*Note: Only the last 100 messages that are under 14 days old will be deleted.*',
-                    components: [nukeButtons]
-                })
-
-                const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
-
-                collector.on('collect', async i => {
-                    switch (i.customId) {
-                        case 'destroy':
-                            try {
-                                await interaction.channel.bulkDelete(100)
-                                await interaction.channel.send(`Channel nuked by <@${interaction.member.id}>`)
-                            } catch (error) {
-                                await interaction.deleteReply()
-                                await interaction.followUp({ content: ':x: Cannot delete messages that are over 14 days old.', ephemeral: true })
-                            }
-                            break;
-                        case 'staysafe':
-                            await interaction.deleteReply()
-                            break;
-                    }
-                });
-            }
-            break;
-        case 'uploademoji':
-            await interaction.guild.emojis.create(interaction.options.getString('url'), interaction.options.getString('name'))
-                .then(interaction.reply({
-                    content: `Successfully created the emoji!`,
-                    ephemeral: true
-                }))
-                .catch(console.error);
             break;
     }
 })
