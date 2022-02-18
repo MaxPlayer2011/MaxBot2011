@@ -1,7 +1,7 @@
 # MaxBot2011
 This is a cool bot with a lot of commands! Feel free to fork it or use the code in your own project!
 
-If you want to use it in your server, then [add it](https://discord.com/api/oauth2/authorize?client_id=934288841383231488&permissions=8&scope=bot%20applications.commands).
+If you want to use it in your server, then [add it](https://discord.com/api/oauth2/authorize?client_id=934288841383231488&permissions=8&scope=bot).
 
 ## Requirements
 
