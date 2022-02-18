@@ -19,11 +19,12 @@ Once you got Node.js and Git installed, follow these steps:
 3. Clone the repo using `git clone https://github.com/MaxPlayer2011/MaxBot2011.git`
 4. `cd` into the new directory.
 5. Create a Discord application, then turn it into a bot.
-6. Copy the bot token in your application.
-7. Create a file called `.env`, then paste this:
+6. Invite it to your Discord server.
+7. Copy the bot token in your application.
+8. Create a file called `.env`, then paste this:
 ```
 BOT_TOKEN=[your bot token here]
 ```
-8. Open up `index.js`, and make sure to read the instuctions from lines 16-17 and 32-33.
-9. Run `npm run devStart`
-10. If the bot becomes online, everything works!
+9. Open up `index.js`, and make sure to read the instuctions from line 10.
+10. Run `npm run devStart`
+11. If the bot becomes online, everything works!
