@@ -1,16 +1,16 @@
-const { Permissions } = require('discord.js');
-const wait = require('util').promisify(setTimeout);
+const wait = require('util').promisify(setTimeout)
 
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 
-const Discord = require('discord.js')
+import Discord, { Permissions, TextChannel } from 'discord.js'
 const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] });
 const date = new Date()
 const debugMode = false;
 const clientId = '934288841383231488' //Change this to your own bot ID
 
 client.on('ready', () => {
-    client.user.setActivity('$help')
+    client.user!.setActivity('$help')
     console.log('Bot ready')
 })
 
@@ -18,14 +18,14 @@ client.on('messageCreate', async msg => {
     if (!msg.content.startsWith('$') || msg.author.bot) return;
 
     const args = msg.content.substring(1).trim().split(/ +/g)
-    const command = args.shift().toLowerCase()
+    const command = args.shift()!.toLowerCase()
     const fullArgs = msg.content.substring(command.length + 2)
     switch (command) {
         case 'help':
             const helpEmbed = new Discord.MessageEmbed()
                 .setColor('#00ff00')
                 .setTitle('Commands list')
-                .setAuthor({ name: 'MaxBot2011', iconURL: client.user.avatarURL() })
+                .setAuthor({ name: 'MaxBot2011', iconURL: client.user!.avatarURL()?.toString() })
                 .setDescription('`koolkid\ngay\nmrgoatcheese\ncheese\npizza\nnuke\n8ball\nkill\nheck\necho`')
                 .setFooter({ 'text': 'Make sure to put a $ before each command!\n\nMade by MaxPlayer2011' })
             msg.channel.send({ embeds: [helpEmbed] })
@@ -54,7 +54,7 @@ client.on('messageCreate', async msg => {
             break;
         case 'mrgoatcheese':
             const mrgoatcheese = new Discord.MessageEmbed()
-                .setColor('5acff5')
+                .setColor('#5acff5')
                 .setDescription('hEy There! Sexy.! I am GoatCHeESe\n\nCHEESE CHEESE CHEESE')
             msg.channel.send({ embeds: [mrgoatcheese], files: ['http://dev.gamez-productions.com/discord/maxbot2011/mrgoatcheese.png'] })
             break;
@@ -66,7 +66,7 @@ client.on('messageCreate', async msg => {
             msg.channel.send('OM NOM NOM NOM NOM NOM NOM NOM\nYUMMY!!!')
             break;
         case 'nuke':
-            if (!checkIfUserIsAdmin(msg.member)) {
+            if (!checkIfUserIsAdmin(msg.member!)) {
                 msg.channel.send('Sorry, but you do not have permission to do that.')
             }
             else {
@@ -91,7 +91,9 @@ client.on('messageCreate', async msg => {
                     switch (i.customId) {
                         case 'destroy':
                             try {
-                                await msg.channel.bulkDelete(100)
+                                if (msg.channel.type != 'DM') {
+                                    await msg.channel.bulkDelete(100)
+                                }
                                 msg.channel.send(`Channel nuked by <@${msg.author.id}>`)
                             } catch (error) {
                                 message.delete()
@@ -118,7 +120,7 @@ client.on('messageCreate', async msg => {
             const eightballembed = new Discord.MessageEmbed()
                 .setColor('#00ff00')
                 .setTitle(fullArgs)
-                .setAuthor({ name: client.user.username, iconURL: client.user.avatarURL() })
+                .setAuthor({ name: client.user!.username, iconURL: client.user!.avatarURL()?.toString() })
                 .setDescription(eightballreplies[getRandomInt(eightballreplies.length)])
                 .setFooter({ text: 'Made by MaxPlayer2011' })
             msg.channel.send({ embeds: [eightballembed] })
@@ -175,7 +177,7 @@ client.on('messageCreate', async msg => {
                         'i have diarrea every 5 mins help me :pray:'
                     ]
                     try {
-                        const message = await msg.channel.send(`\`$ sudo heck ${client.users.cache.get(args[0].slice(3, -1)).tag}\``)
+                        const message = await msg.channel.send(`\`$ sudo heck ${client.users.cache.get(args[0].slice(3, -1))?.tag}\``)
                         await wait(1000)
                         await message.edit('Starting hecking...')
                         await wait(3000)
@@ -211,9 +213,9 @@ client.on('messageCreate', async msg => {
             break;
         case 'uploademoji':
             if (args[0] != null && args[1] != null) {
-                msg.guild.emojis.create(args[0], args[1])
-                    .then(msg.channel.send('Successfully created the emoji!'))
+                await msg.guild!.emojis.create(args[0], args[1])
                     .catch(console.error);
+                msg.channel.send('Successfully created the emoji!')
             }
             break;
         case 'echo':
@@ -227,16 +229,16 @@ client.on('messageCreate', async msg => {
     }
 })
 
-function checkIfUserIsAdmin(member) {
+function checkIfUserIsAdmin(member: Discord.GuildMember) {
     if (member.permissions.has([Permissions.FLAGS.ADMINISTRATOR]))
         return true;
     else
         return false;
 }
 
-let previousRandomNumber;
+let previousRandomNumber: number;
 
-function getRandomInt(max) {
+function getRandomInt(max: number) {
     let random = Math.floor(Math.random() * max)
     while (random == previousRandomNumber) {
         random = Math.floor(Math.random() * max)

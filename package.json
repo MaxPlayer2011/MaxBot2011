@@ -2,10 +2,10 @@
   "name": "maxbot2011",
   "version": "1.0.0",
   "description": "A bot made by MaxPlayer2011#6803.",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "node index.js",
-    "devStart": "nodemon index.js"
+    "start": "ts-node index.ts",
+    "devStart": "nodemon index.ts"
   },
   "keywords": [],
   "author": "MaxPlayer2011",
