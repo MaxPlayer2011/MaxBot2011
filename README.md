@@ -25,6 +25,11 @@ Once you got Node.js and Git installed, follow these steps:
 ```
 BOT_TOKEN=[your bot token here]
 ```
-9. Open up `index.js`, and make sure to read the instuctions from line 10.
-10. Run `npm run devStart`
-11. If the bot becomes online, everything works!
+9. Run the following commands:
+```
+npm i -g typescript
+npm i -g ts-node
+```
+10. Open up `index.ts`, and make sure to read the instuctions from line 10.
+11. Run `npm run devStart`
+12. If the bot becomes online, everything works!
