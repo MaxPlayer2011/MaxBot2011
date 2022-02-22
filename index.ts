@@ -3,7 +3,7 @@ const wait = require('util').promisify(setTimeout)
 import dotenv from 'dotenv'
 dotenv.config()
 
-import Discord, { Permissions, TextChannel } from 'discord.js'
+import Discord, { Permissions } from 'discord.js'
 const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] });
 const date = new Date()
 const debugMode = false;
