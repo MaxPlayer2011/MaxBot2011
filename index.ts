@@ -68,46 +68,52 @@ client.on('messageCreate', async msg => {
         case 'nuke':
             if (!checkIfUserIsAdmin(msg.member!)) {
                 msg.channel.send('Sorry, but you do not have permission to do that.')
+                return;
             }
-            else {
-                const nukeButtons = new Discord.MessageActionRow().addComponents(
-                    new Discord.MessageButton()
-                        .setCustomId('destroy')
-                        .setLabel('Yes')
-                        .setStyle('DANGER'),
-                    new Discord.MessageButton()
-                        .setCustomId('staysafe')
-                        .setLabel('No')
-                        .setStyle('SUCCESS')
-                )
-                const message = await msg.channel.send({
-                    content: 'Are you sure you want to nuke this channel?\n**YOU WON\'T BE ABLE TO UNDO THIS!!**',
-                    components: [nukeButtons]
-                })
+            else if (!msg.member?.guild.me?.permissions.has('MANAGE_CHANNELS')) {
+                msg.channel.send('Sorry, but I do not have permission to do that.')
+                return;
+            }
 
-                const collector = msg.channel.createMessageComponentCollector({ time: 15000 });
+            const nukeButtons = new Discord.MessageActionRow().addComponents(
+                new Discord.MessageButton()
+                    .setCustomId('destroy')
+                    .setLabel('Yes')
+                    .setStyle('DANGER'),
+                new Discord.MessageButton()
+                    .setCustomId('staysafe')
+                    .setLabel('No')
+                    .setStyle('SUCCESS')
+            )
+            const message = await msg.channel.send({
+                content: 'Are you sure you want to nuke this channel?\n**YOU WON\'T BE ABLE TO UNDO THIS!!**',
+                components: [nukeButtons]
+            })
 
-                collector.on('collect', async i => {
-                    switch (i.customId) {
-                        case 'destroy':
-                            try {
-                                if (msg.channel.type == 'GUILD_TEXT' || msg.channel.type == 'GUILD_NEWS') {
-                                    msg.channel.clone().then(channel => {
-                                        msg.channel.delete()
-                                        channel.send(`Channel nuked by <@${msg.author.id}>`)
-                                    })
-                                }
-                            } catch (error) {
-                                message.delete()
-                                msg.channel.send(':x: An error has occured.')
+            const collector = msg.channel.createMessageComponentCollector({ time: 15000 });
+
+            collector.on('collect', async i => {
+                switch (i.customId) {
+                    case 'destroy':
+                        try {
+                            if (msg.channel.type != 'DM') {
+                                await msg.channel.bulkDelete(100)
                             }
-                            break;
-                        case 'staysafe':
-                            message.delete()
-                            break;
-                    }
-                });
-            }
+                            msg.channel.send(`Channel nuked by <@${msg.author.id}>`)
+                        } catch (error) {
+                            if (msg.channel.type == 'GUILD_TEXT' || msg.channel.type == 'GUILD_NEWS') {
+                                msg.channel.clone().then(channel => {
+                                    msg.channel.delete()
+                                    channel.send(`Channel nuked by <@${msg.author.id}>`)
+                                })
+                            }
+                        }
+                        break;
+                    case 'staysafe':
+                        message.delete()
+                        break;
+                }
+            });
             break;
         case '8ball':
             const eightballreplies = [
