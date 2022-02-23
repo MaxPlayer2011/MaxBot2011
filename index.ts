@@ -26,7 +26,7 @@ client.on('messageCreate', async msg => {
                 .setColor('#00ff00')
                 .setTitle('Commands list')
                 .setAuthor({ name: 'MaxBot2011', iconURL: client.user!.avatarURL()?.toString() })
-                .setDescription('`koolkid\ngay\nmrgoatcheese\ncheese\npizza\nnuke\n8ball\nkill\nheck\nuploademoji\necho`')
+                .setDescription('`koolkid\ngay\nmrgoatcheese\ncheese\npizza\nnuke\n8ball\nkill\nheck\nuploademoji\necho\ncake`')
                 .setFooter({ 'text': 'Make sure to put a $ before each command!\n\nMade by MaxPlayer2011' })
             msg.channel.send({ embeds: [helpEmbed] })
             break;
@@ -221,6 +221,17 @@ client.on('messageCreate', async msg => {
         case 'echo':
             if (args[0] != null) {
                 msg.channel.send(fullArgs)
+            }
+            break;
+        case 'cake':
+            await msg.channel.send({ files: ['http://dev.gamez-productions.com/discord/maxbot2011/The_cake_is_a_lie.jpg'] })
+            for (let i = 0; i < 4; i++) {
+                if (i < 3) {
+                    msg.channel.send('the cake is a lie.')
+                }
+                else {
+                    msg.channel.send('the cake is a lie')
+                }
             }
             break;
         default:
