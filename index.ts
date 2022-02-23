@@ -81,7 +81,7 @@ client.on('messageCreate', async msg => {
                         .setStyle('SUCCESS')
                 )
                 const message = await msg.channel.send({
-                    content: 'Are you sure you want to nuke this channel?\n**YOU WON\'T BE ABLE TO UNDO THIS!!**\n*Note: Only the last 100 messages that are under 14 days old will be deleted.*',
+                    content: 'Are you sure you want to nuke this channel?\n**YOU WON\'T BE ABLE TO UNDO THIS!!**',
                     components: [nukeButtons]
                 })
 
