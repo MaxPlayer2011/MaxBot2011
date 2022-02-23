@@ -91,13 +91,15 @@ client.on('messageCreate', async msg => {
                     switch (i.customId) {
                         case 'destroy':
                             try {
-                                if (msg.channel.type != 'DM') {
-                                    await msg.channel.bulkDelete(100)
+                                if (msg.channel.type == 'GUILD_TEXT' || msg.channel.type == 'GUILD_NEWS') {
+                                    msg.channel.clone().then(channel => {
+                                        msg.channel.delete()
+                                        channel.send(`Channel nuked by <@${msg.author.id}>`)
+                                    })
                                 }
-                                msg.channel.send(`Channel nuked by <@${msg.author.id}>`)
                             } catch (error) {
                                 message.delete()
-                                msg.channel.send(':x: Cannot delete messages that are over 14 days old.')
+                                msg.channel.send(':x: An error has occured.')
                             }
                             break;
                         case 'staysafe':
