@@ -26,7 +26,8 @@ client.on('messageCreate', async msg => {
                 .setColor('#00ff00')
                 .setTitle('Commands list')
                 .setAuthor({ name: 'MaxBot2011', iconURL: client.user!.avatarURL()?.toString() })
-                .setDescription('`koolkid\ngay\nmrgoatcheese\ncheese\npizza\nnuke\n8ball\nkill\nheck\nuploademoji\necho\ncake`')
+                .setDescription(
+                    '`koolkid [optional:target]\ngay [optional:target]\nmrgoatcheese\ncheese\npizza\nnuke\n8ball [question]\nkill [target]\nheck [target]\nuploademoji [url,name]\necho [message]\ncake`')
                 .setFooter({ 'text': 'Make sure to put a $ before each command!\n\nMade by MaxPlayer2011' })
             msg.channel.send({ embeds: [helpEmbed] })
             break;
